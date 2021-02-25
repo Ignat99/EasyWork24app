@@ -4,7 +4,7 @@
 
 <td class="task_user_c" >{SELECTED_USER}{TASK_DESC}
 
-<div style="margin:5px 0px 8px 0px"><a href="javascript:;" onclick="show_project_tasks_comments('{TASK_ID}')" class="link_proc">Отчет <span class="new_count" id="new_task_report_count_{TASK_ID}">{TASK_REPORTS_COUNT}</span></a></div>
+<div style="margin:5px 0px 8px 0px"><a href="javascript:;" onclick="show_project_tasks_comments('{TASK_ID}')" class="link_proc">ГЋГІГ·ГҐГІ <span class="new_count" id="new_task_report_count_{TASK_ID}">{TASK_REPORTS_COUNT}</span></a></div>
 <div id="comments_{TASK_ID}" class="project_task_comments_bl"></div>
 
 <div class="project_task_completed_bl" id="project_task_completed_bl_{TASK_ID}">{COMPLETED_BTN}</div>
@@ -14,11 +14,11 @@
 
 
 <td class="prt_dates_bl">
-<div class="prt_date_t">По плану</div>
+<div class="prt_date_t">De acuerdo al plan</div>
 <span task_id="{TASK_ID}" id="task_date_start_{TASK_ID}" class="prtdt date_start" not_picker="1">{DATE_START}</span>
 <span task_id="{TASK_ID}" id="task_date_finish_{TASK_ID}" class="prtdt date_finish" value="{DATE_FINISH}" not_picker="1">{DATE_FINISH}</span>
 <div class="clear"></div>
-<div class="prt_date_t">По факту</div> 
+<div class="prt_date_t">De hecho</div> 
 <div><div class="prtdt" id="fact_date_start_{TASK_ID}"></div> <div class="prtdt" id="fact_date_finish_{TASK_ID}"></div>
 <div class="clear"></div>
 </div>
