@@ -8,17 +8,17 @@
 <td style="vertical-align:top; min-width:300px">
     <table class="project_tasks_tb"  cellpadding="0" cellspacing="0" id="project_tasks_tb">
     <tr>
-    <th class="nopdl">№</th>
-    <th class="">Сотрудник</th>
-    <th class="">Дата старта</th>
-    <th class="">Дата завершения</th>
+    <th class="nopdl">В№</th>
+    <th class="">Empleado</th>
+    <th class="">Fecha de inicio</th>
+    <th class="">Fecha de realizaciГіn</th>
     <th></th>
     </tr>
    <tbody id="projects_tasks">
    {PROJECT_TASKS_LIST}
    </tbody>
    </table>
-   <a href="javascript:;" onclick="add_project_task()" class="link" id="add_more_project_task_btn">[+] добавить еще задачу</a> 
+   <a href="javascript:;" onclick="add_project_task()" class="link" id="add_more_project_task_btn">[+] agregar otra tarea</a> 
 </td>
 <td style="vertical-align:top"></td>
 </tr>
@@ -26,10 +26,10 @@
 
 
 <div style="margin-bottom:10px" id="add_project_task_btn">
-<a href="javascript:;" onclick="add_project_task()" class="link">[+] добавить задачу</a>
+<a href="javascript:;" onclick="add_project_task()" class="link">[+] agregar tarea</a>
 </div>
 <div id="ggg"></div> 
-<div class="d_none project_period_date" id="project_period_date">Дата старта: <span id="project_date_start"></span> Дата завершения: <span id="project_date_finish"></span></div>     
+<div class="d_none project_period_date" id="project_period_date">Fecha de inicio: <span id="project_date_start"></span> Fecha de realizaciГіn: <span id="project_date_finish"></span></div>     
 <div class="project_scheme d_none" id="project_scheme">
 <table cellpadding="0" cellspacing="0" class="project_scheme_tb">
 <thead class="project_scheme_month_th">
@@ -45,7 +45,7 @@
 <div style="float:right"><div class="project_closed_title project_str_closed_status">{PROJECT_CLOSED_STR}</div>{PROJECT_CLOSE_BTN}</div>
 
 <a class="button" onclick="save_project()" href="javascript:;" id="add_project_btn">
-<div class="right"></div><div class="left"></div><div class="btn_cont">сохранить изменения</div></a>
+<div class="right"></div><div class="left"></div><div class="btn_cont">guardar cambios</div></a>
 
  
 
