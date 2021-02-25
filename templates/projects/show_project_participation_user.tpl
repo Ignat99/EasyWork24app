@@ -8,10 +8,10 @@
 <td style="vertical-align:top; min-width:300px">
     <table class="project_tasks_tb"  cellpadding="0" cellspacing="0" id="project_tasks_tb">
     <tr>
-    <th class="nopdl">№</th>
-    <th class="">Сотрудник</th>
-    <th title="Предшествующая задача">Пред.</th>
-    <th class="">Дата старта &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Дата завершения</th>
+    <th class="nopdl">В№</th>
+    <th class="">Empleado</th>
+    <th title="Tarea previa">Anterior.</th>
+    <th class="">Fecha de inicio &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fecha de realizaciГіn</th>
     </tr>
    <tbody id="projects_tasks">
    {PROJECT_TASKS_LIST}
@@ -23,7 +23,7 @@
 </tr>
 </table>
  
-<div class="d_none project_period_date" id="project_period_date">Дата старта: <span id="project_date_start"></span> Дата завершения: <span id="project_date_finish"></span></div>     
+<div class="d_none project_period_date" id="project_period_date">Fecha de inicio: <span id="project_date_start"></span> Fecha de realizaciГіn: <span id="project_date_finish"></span></div>     
 <div class="project_scheme d_none" id="project_scheme">
 <table cellpadding="0" cellspacing="0" class="project_scheme_tb">
 <thead class="project_scheme_month_th">
