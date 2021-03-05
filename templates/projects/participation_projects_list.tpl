@@ -1,10 +1,10 @@
 <table cellpadding="0" cellspacing="0" class="tables_data_1" style="width:100%; margin-top:20px">
 <thead>
 <tr class="tr_th">
-	<th class="">Добавил</th>
-	<th class="">Название</th>
-	<th class="">Дата старта</th>
-    <th class="">Дата завершения</th>
+	<th class="">AГ±adido por</th>
+	<th class="">Nombre</th>
+	<th class="">Fecha de inicio</th>
+    <th class="">Fecha de realizaciГіn</th>
     <th class=""></th>
 </tr>
 </thead>

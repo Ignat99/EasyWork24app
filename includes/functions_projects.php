@@ -1,6 +1,6 @@
 <?php
-#### Проекты
-// Страница - Заданий сотрудника
+#### РџСЂРѕРµРєС‚С‹
+// РЎС‚СЂР°РЅРёС†Р° - Р—Р°РґР°РЅРёР№ СЃРѕС‚СЂСѓРґРЅРёРєР°
 function fill_projects($to_user_id)
 {
 	global $site_db, $current_user_id, $user_obj;
@@ -9,27 +9,27 @@ function fill_projects($to_user_id)
 	
 	if(!$_GET['part']==1 && !$_GET['part']==2)
 	{
-		// Форма добавления нового проекта
+		// Р¤РѕСЂРјР° РґРѕР±Р°РІР»РµРЅРёСЏ РЅРѕРІРѕРіРѕ РїСЂРѕРµРєС‚Р°
 		$add_form = fill_projects_add_form();
 	}
 
-	// Очистка массива удаленных контактов
+	// РћС‡РёСЃС‚РєР° РјР°СЃСЃРёРІР° СѓРґР°Р»РµРЅРЅС‹С… РєРѕРЅС‚Р°РєС‚РѕРІ
 	if($_SESSION['project_delete'])
 	{
 		$_SESSION['project_delete'] = '';
 	}
 	
-	// Верхнее меню
+	// Р’РµСЂС…РЅРµРµ РјРµРЅСЋ
 	$top_menu = fill_projects_top_menu();
 	
-	// На странице Проекты в которых я участвую, выводим все задачи, в которых участвует юзер
+	// РќР° СЃС‚СЂР°РЅРёС†Рµ РџСЂРѕРµРєС‚С‹ РІ РєРѕС‚РѕСЂС‹С… СЏ СѓС‡Р°СЃС‚РІСѓСЋ, РІС‹РІРѕРґРёРј РІСЃРµ Р·Р°РґР°С‡Рё, РІ РєРѕС‚РѕСЂС‹С… СѓС‡Р°СЃС‚РІСѓРµС‚ СЋР·РµСЂ
 	if($_GET['part']==1)
 	{
-		// Диаграмма ганта по всем задачам пользователя в проектах, в которых он участвует
+		// Р”РёР°РіСЂР°РјРјР° Р“Р°РЅС‚Р° РїРѕ РІСЃРµРј Р·Р°РґР°С‡Р°Рј РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РІ РїСЂРѕРµРєС‚Р°С…, РІ РєРѕС‚РѕСЂС‹С… РѕРЅ СѓС‡Р°СЃС‚РІСѓРµС‚
 		$user_part_projects_gant = fill_user_part_projects_gant($current_user_id);
 	}
 	
-	// закрытые проекты
+	// Р·Р°РєСЂС‹С‚С‹Рµ РїСЂРѕРµРєС‚С‹
 	$closed = value_proc($_GET['closed']);
 	
 	$projects_list_content = fill_projects_list_content($closed);
@@ -57,10 +57,10 @@ function fill_projects_list_content($closed = 0)
 	
 	if($_GET['part']==1 || $_GET['part']==4)
 	{
-		// Кол-во проектов
+		// РљРѕР»-РІРѕ РїСЂРѕРµРєС‚РѕРІ
 		$projects_count = get_user_participation_projects_count($current_user_id, $closed);
 		
-		// Список проектов, в которых пользователь участвует
+		// РЎРїРёСЃРѕРє РїСЂРѕРµРєС‚РѕРІ, РІ РєРѕС‚РѕСЂС‹С… РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ СѓС‡Р°СЃС‚РІСѓРµС‚
 		$projects_list = fill_participation_projects_list($current_user_id, $closed);
 		
 		$is_part = 1;
@@ -72,7 +72,7 @@ function fill_projects_list_content($closed = 0)
 			header('Location: /projects');
 			exit();
 		}
-		// Выбираем последний добавленный проект
+		// Р’С‹Р±РёСЂР°РµРј РїРѕСЃР»РµРґРЅРёР№ РґРѕР±Р°РІР»РµРЅРЅС‹Р№ РїСЂРѕРµРєС‚
 		$sql = "SELECT project_id FROM ".PROJECTS_TB." WHERE deleted<>1 ORDER by project_id DESC LIMIT 1";
 		
 		$row = $site_db->query_firstrow($sql);
@@ -82,17 +82,17 @@ function fill_projects_list_content($closed = 0)
 			$_SESSION['last_project_id'] = $row['project_id'];
 		}
 		
-		// Кол-во проектов
+		//РљРѕР»-РІРѕ РїСЂРѕРµРєС‚РѕРІ
 		$projects_count = get_user_projects_all_count();
 		
-		// Список проектов
+		// РЎРїРёСЃРѕРє РїСЂРѕРµРєС‚РѕРІ
 		$projects_list = fill_projects_all_list();
 		
 		$is_part = 5; 
 	}
 	else
 	{
-		// Выбираем последний добавленный проект
+		// Р’С‹Р±РёСЂР°РµРј РїРѕСЃР»РµРґРЅРёР№ РґРѕР±Р°РІР»РµРЅРЅС‹Р№ РїСЂРѕРµРєС‚
 		$sql = "SELECT project_id FROM ".PROJECTS_TB." WHERE deleted<>1 ORDER by project_id DESC LIMIT 1";
 		
 		$row = $site_db->query_firstrow($sql);
@@ -102,19 +102,19 @@ function fill_projects_list_content($closed = 0)
 			$_SESSION['last_project_id'] = $row['project_id'];
 		}
 		
-		// Кол-во проектов
+		// РљРѕР»-РІРѕ РїСЂРѕРµРєС‚РѕРІ
 		$projects_count = get_user_projects_count($current_user_id, $closed);
 		
-		// Список проектов
+		// РЎРїРёСЃРѕРє РїСЂРѕРµРєС‚РѕРІ
 		$projects_list = fill_projects_list($current_user_id, $closed);
 		
 		$is_part = 0;
 	}
 	
-	// Кол-во страниц
+	// РљРѕР»-РІРѕ СЃС‚СЂР°РЅРёС†
 	$pages_count = ceil($projects_count/PROJECTS_PER_PAGE);
 		
-	// Если страниц больше 1
+	// Р•СЃР»Рё СЃС‚СЂР°РЅРёС† Р±РѕР»СЊС€Рµ 1
 	if($pages_count > 1)
 	{
 		$more_btn = $more_btn_tpl;
@@ -132,7 +132,7 @@ function fill_projects_list_content($closed = 0)
 }
 
 
-// Диаграмма ганта по всем текущим задачам проекта
+// Р”РёР°РіСЂР°РјРјР° Р“Р°РЅС‚Р° РїРѕ РІСЃРµРј С‚РµРєСѓС‰РёРј Р·Р°РґР°С‡Р°Рј РїСЂРѕРµРєС‚Р°
 function fill_user_part_projects_gant($user_id)
 {
 	global $site_db, $current_user_id, $user_obj;
@@ -209,7 +209,7 @@ function fill_user_part_projects_gant($user_id)
 	return fetch_tpl($PARS, $user_part_gant_tpl);
 }
 
-// Верхнее меню
+// Р’РµСЂС…РЅРµРµ РјРµРЅСЋ
 function fill_projects_top_menu()
 {
 	global $site_db, $current_user_id, $user_obj, $current_user_obj;
@@ -230,7 +230,7 @@ function fill_projects_top_menu()
 	
 	$new_count_in_part_projects = $new_count_in_part_projects ? ' (+ '.$new_count_in_part_projects.')' : '';
 	
-	// для админа выводим вкладку Все
+	// РґР»СЏ Р°РґРјРёРЅР° РІС‹РІРѕРґРёРј РІРєР»Р°РґРєСѓ Р’СЃРµ
 	if($current_user_obj->get_is_admin())
 	{
 		 $top_menu_admin =  $top_menu_admin_tpl;
@@ -283,7 +283,7 @@ function get_user_participation_projects_count($user_id, $closed)
 	
 	$and_closed = get_query_part_closed_projects($closed);
 	
-	// Выбор проектов
+	// Р’С‹Р±РѕСЂ РїСЂРѕРµРєС‚РѕРІ
 	$sql = "SELECT COUNT(DISTINCT (i.project_id)) as count FROM ".PROJECTS_TB." i
 			LEFT JOIN ".PROJECT_TASKS_TB." j ON i.project_id=j.project_id
 			WHERE (j.user_id='$user_id' OR i.project_head='$user_id' OR j.added_by_user_id='$user_id') AND i.deleted<>1 $and_closed";
@@ -292,28 +292,28 @@ function get_user_participation_projects_count($user_id, $closed)
 	
 	return $row['count'];
 }
-// Кол-во проектов пользователя
+// РљРѕР»-РІРѕ РїСЂРѕРµРєС‚РѕРІ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 function get_user_projects_all_count()
 {
 	global $site_db, $current_user_id;
 	
 	$and_closed = get_query_part_closed_projects($closed);
 	
-	// Выбор проектов
+	// Р’С‹Р±РѕСЂ РїСЂРѕРµРєС‚РѕРІ
 	$sql = "SELECT COUNT(*) as count FROM ".PROJECTS_TB." WHERE deleted<>1";
 	
 	$row = $site_db->query_firstrow($sql);
 	
 	return $row['count'];
 }
-// Кол-во проектов пользователя
+// РљРѕР»-РІРѕ РїСЂРѕРµРєС‚РѕРІ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 function get_user_projects_count($user_id, $closed)
 {
 	global $site_db, $current_user_id;
 	
 	$and_closed = get_query_part_closed_projects($closed);
 	
-	// Выбор проектов
+	// Р’С‹Р±РѕСЂ РїСЂРѕРµРєС‚РѕРІ
 	$sql = "SELECT COUNT(*) as count FROM ".PROJECTS_TB." WHERE user_id='$user_id' AND deleted<>1 $and_closed";
 	
 	$row = $site_db->query_firstrow($sql);
@@ -321,7 +321,7 @@ function get_user_projects_count($user_id, $closed)
 	return $row['count'];
 }
 
-// Получает часть запроса 
+// РџРѕР»СѓС‡Р°РµС‚ С‡Р°СЃС‚СЊ Р·Р°РїСЂРѕСЃР°
 function get_query_part_closed_projects($closed = 0)
 {
 	if($closed==1)
@@ -336,7 +336,7 @@ function get_query_part_closed_projects($closed = 0)
 	return $and_closed;
 }
 
-// Список проектов
+// РЎРїРёСЃРѕРє РїСЂРѕРµРєС‚РѕРІ
 function fill_participation_projects_list($user_id, $closed, $page = 1)
 {
 	global $site_db, $current_user_id, $user_obj;
@@ -347,12 +347,12 @@ function fill_participation_projects_list($user_id, $closed, $page = 1)
 	
 	$and_closed = get_query_part_closed_projects($closed);
 	
-	// Страничность
+	// РЎС‚СЂР°РЅРёС‡РЅРѕСЃС‚СЊ
 	$begin_pos = PROJECTS_PER_PAGE * ($page-1);
 	
 	$limit = " LIMIT ".$begin_pos.",".PROJECTS_PER_PAGE;
 	
-	// Выбор проектов
+	// Р’С‹Р±РѕСЂ РїСЂРѕРµРєС‚РѕРІ
 	$sql = "SELECT DISTINCT (i.project_id), i.* FROM ".PROJECTS_TB." i
 			LEFT JOIN ".PROJECT_TASKS_TB." j ON i.project_id=j.project_id
 			WHERE (j.user_id='$user_id' OR i.project_head='$user_id' OR j.added_by_user_id='$user_id') AND i.deleted<>1 $and_closed ORDER by i.project_id DESC $limit";
@@ -372,7 +372,7 @@ function fill_participation_projects_list($user_id, $closed, $page = 1)
 	return $project_list;
 }
 
-// Список проектов
+// РЎРїРёСЃРѕРє РїСЂРѕРµРєС‚РѕРІ
 function fill_projects_all_list($page = 1)
 {
 	global $site_db, $current_user_id, $user_obj;
@@ -381,7 +381,7 @@ function fill_projects_all_list($page = 1)
 	
 	$and_closed = get_query_part_closed_projects($closed);
 	
-	// Удаленные в этой сессии клиенты
+	// РЈРґР°Р»РµРЅРЅС‹Рµ РІ СЌС‚РѕР№ СЃРµСЃСЃРёРё РєР»РёРµРЅС‚С‹
 	$deleted_projects_ids = implode(', ', $_SESSION['project_delete']);
 	
 	if($deleted_projects_ids)
@@ -389,7 +389,7 @@ function fill_projects_all_list($page = 1)
 		$and_deleted_projects = " OR project_id IN($deleted_projects_ids) ";
 	}
 	 
-	// Последний добавленный пользователем проект
+	// РџРѕСЃР»РµРґРЅРёР№ РґРѕР±Р°РІР»РµРЅРЅС‹Р№ РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј РїСЂРѕРµРєС‚
 	if($_SESSION['last_project_id'])
 	{
 		$and_project_id = " AND project_id <= '".$_SESSION['last_project_id']."' ";
@@ -397,12 +397,12 @@ function fill_projects_all_list($page = 1)
 	
 	$page = $page ? $page : 1;
 	
-	// Страничность
+	// РЎС‚СЂР°РЅРёС‡РЅРѕСЃС‚СЊ
 	$begin_pos = PROJECTS_PER_PAGE * ($page-1);
 	
 	$limit = " LIMIT ".$begin_pos.",".PROJECTS_PER_PAGE;
 	
-	// Выбор проектов
+	// Р’С‹Р±РѕСЂ РїСЂРѕРµРєС‚РѕРІ
 	$sql = "SELECT * FROM ".PROJECTS_TB." WHERE (deleted<>1 $and_deleted_projects) $and_project_id ORDER by project_id DESC $limit";
 	
 	
@@ -421,7 +421,7 @@ function fill_projects_all_list($page = 1)
 	return $project_list;
 }
 
-// Список проектов
+// РЎРїРёСЃРѕРє РїСЂРѕРµРєС‚РѕРІ
 function fill_projects_list($user_id, $closed, $page = 1)
 {
 	global $site_db, $current_user_id, $user_obj;
@@ -430,7 +430,7 @@ function fill_projects_list($user_id, $closed, $page = 1)
 	
 	$and_closed = get_query_part_closed_projects($closed);
 	
-	// Удаленные в этой сессии клиенты
+	// РЈРґР°Р»РµРЅРЅС‹Рµ РІ СЌС‚РѕР№ СЃРµСЃСЃРёРё РєР»РёРµРЅС‚С‹
 	$deleted_projects_ids = implode(', ', $_SESSION['project_delete']);
 	
 	if($deleted_projects_ids)
@@ -438,7 +438,7 @@ function fill_projects_list($user_id, $closed, $page = 1)
 		$and_deleted_projects = " OR project_id IN($deleted_projects_ids) ";
 	}
 	 
-	// Последний добавленный пользователем проект
+	// РџРѕСЃР»РµРґРЅРёР№ РґРѕР±Р°РІР»РµРЅРЅС‹Р№ РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј РїСЂРѕРµРєС‚
 	if($_SESSION['last_project_id'])
 	{
 		$and_project_id = " AND project_id <= '".$_SESSION['last_project_id']."' ";
@@ -446,12 +446,12 @@ function fill_projects_list($user_id, $closed, $page = 1)
 	
 	$page = $page ? $page : 1;
 	
-	// Страничность
+	// РЎС‚СЂР°РЅРёС‡РЅРѕСЃС‚СЊ
 	$begin_pos = PROJECTS_PER_PAGE * ($page-1);
 	
 	$limit = " LIMIT ".$begin_pos.",".PROJECTS_PER_PAGE;
 	
-	// Выбор проектов
+	// Р’С‹Р±РѕСЂ РїСЂРѕРµРєС‚РѕРІ
 	$sql = "SELECT * FROM ".PROJECTS_TB." WHERE user_id='$user_id' AND (deleted<>1 $and_deleted_projects) $and_project_id $and_closed ORDER by project_id DESC $limit";
 	
 	
@@ -470,7 +470,7 @@ function fill_projects_list($user_id, $closed, $page = 1)
 	return $project_list;
 }
 
-// Элемент списка проектов
+// Р­Р»РµРјРµРЅС‚ СЃРїРёСЃРєР° РїСЂРѕРµРєС‚РѕРІ
 function fill_project_list_item($project_data)
 {
 	global $site_db, $user_obj, $current_user_id, $current_user_obj;
@@ -483,7 +483,7 @@ function fill_project_list_item($project_data)
 	
 	$project_confirm_btn_tpl = file_get_contents($_SERVER['DOCUMENT_ROOT'].'/templates/projects/project_confirm_btn.tpl');
 	
-	// Выбор задач проекта, с которыми пользователь еще не ознакомлен
+	// Р’С‹Р±РѕСЂ Р·Р°РґР°С‡ РїСЂРѕРµРєС‚Р°, СЃ РєРѕС‚РѕСЂС‹РјРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ РµС‰Рµ РЅРµ РѕР·РЅР°РєРѕРјР»РµРЅ
 	$sql = "SELECT *, task_id, task_confirm FROM ".PROJECT_TASKS_TB." 
 			WHERE project_id='".$project_data['project_id']."'";
 	
@@ -495,7 +495,7 @@ function fill_project_list_item($project_data)
 	{
 		$projects_tasks_completed_arr[] = $row['task_completed'];
 		
-		// Если для текущего пользователя есть задачи, которые он еще не принял
+		// Р•СЃР»Рё РґР»СЏ С‚РµРєСѓС‰РµРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РµСЃС‚СЊ Р·Р°РґР°С‡Рё, РєРѕС‚РѕСЂС‹Рµ РѕРЅ РµС‰Рµ РЅРµ РїСЂРёРЅСЏР»
 		if($row['user_id']==$current_user_id && $row['task_confirm']==0 && $project_data['user_id']!=$current_user_id)
 		{
 			$project_task_not_confirm = 1;
@@ -507,7 +507,7 @@ function fill_project_list_item($project_data)
 		$project_task_not_confirm = 1;
 	}
 	
-	// Если все задачи в проекте выполнены
+	// Р•СЃР»Рё РІСЃРµ Р·Р°РґР°С‡Рё РІ РїСЂРѕРµРєС‚Рµ РІС‹РїРѕР»РЅРµРЅС‹
 	if(!in_array(0, $projects_tasks_completed_arr) && count($projects_tasks_completed_arr) > 0)
 	{
 		$project_tasks_completed = 'cont_completed_row';
@@ -526,7 +526,7 @@ function fill_project_list_item($project_data)
 		$projects_list_delete_btn = fetch_tpl($PARS, $projects_list_delete_btn_tpl);
 	}
 	
-	// пользователь не ознакомился с задачей в проекте, подсвечиваем проект как новый
+	// РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ РѕР·РЅР°РєРѕРјРёР»СЃСЏ СЃ Р·Р°РґР°С‡РµР№ РІ РїСЂРѕРµРєС‚Рµ, РїРѕРґСЃРІРµС‡РёРІР°РµРј РїСЂРѕРµРєС‚ РєР°Рє РЅРѕРІС‹Р№
 	if($project_task_not_confirm)
 	{
 		$PARS['{PROJECT_ID}'] = $project_data['project_id'];
@@ -534,19 +534,19 @@ function fill_project_list_item($project_data)
 		$project_confirm_btn = fetch_tpl($PARS,$project_confirm_btn_tpl);	
 	}
 	
-	// Новые отчеты для заданий проекта
+	// РќРѕРІС‹Рµ РѕС‚С‡РµС‚С‹ РґР»СЏ Р·Р°РґР°РЅРёР№ РїСЂРѕРµРєС‚Р°
 	$project_new_notice_count += get_project_task_new_reports_count($project_data);
 	
-	// Подсчет новых кооментариев выводим только создателю проекта
+	//РџРѕРґСЃС‡РµС‚ РЅРѕРІС‹С… РєРѕРѕРјРµРЅС‚Р°СЂРёРµРІ РІС‹РІРѕРґРёРј С‚РѕР»СЊРєРѕ СЃРѕР·РґР°С‚РµР»СЋ РїСЂРѕРµРєС‚Р°
 	//if($project_data['user_id']==$current_user_id)
 	//{
-		// Кол-во новых отчетов для репортажа
+		// РљРѕР»-РІРѕ РЅРѕРІС‹С… РѕС‚С‡РµС‚РѕРІ РґР»СЏ СЂРµРїРѕСЂС‚Р°Р¶Р°
 		$project_new_notice_count += get_new_projects_reports_counts($current_user_id, $project_data['project_id']);
 		$project_new_notice_count += get_new_task_completed_counts($current_user_id, $project_data['project_id']);
 		
 	//}
 	
-	// Формируем блок новых уведомлений для проекта
+	// Р¤РѕСЂРјРёСЂСѓРµРј Р±Р»РѕРє РЅРѕРІС‹С… СѓРІРµРґРѕРјР»РµРЅРёР№ РґР»СЏ РїСЂРѕРµРєС‚Р°
 	if($project_new_notice_count)
 	{
 		$PARS_1['{COUNT}'] = $project_new_notice_count;
@@ -558,11 +558,11 @@ function fill_project_list_item($project_data)
 	
 	 
 	
-	// Заполянем объект подчиненного, кому сделан выговор
+	// Р—Р°РїРѕР»СЏРЅРµРј РѕР±СЉРµРєС‚ РїРѕРґС‡РёРЅРµРЅРЅРѕРіРѕ, РєРѕРјСѓ СЃРґРµР»Р°РЅ РІС‹РіРѕРІРѕСЂ
 	$user_obj->fill_user_data($project_data['user_id']);
 
 	$user_id = $row['user_id'];
-	// название клиента для поля фсбк
+	// РЅР°Р·РІР°РЅРёРµ РєР»РёРµРЅС‚Р° РґР»СЏ РїРѕР»СЏ С„СЃР±Рє
 	$PARS_3['{CLASS}'] = 'selected';
 	$PARS_3['{VALUE}'] = $row['user_id'];
 	
@@ -608,8 +608,8 @@ function fill_project_edit_form($project_id)
 	
 	$project_data = get_project_data($project_id);
 	
-	// ответственное лицо
-	// Заполянем объект подчиненного
+	// РѕС‚РІРµС‚СЃС‚РІРµРЅРЅРѕРµ Р»РёС†Рѕ
+	// Р—Р°РїРѕР»СЏРЅРµРј РѕР±СЉРµРєС‚ РїРѕРґС‡РёРЅРµРЅРЅРѕРіРѕ
 	if($project_data['project_head'])
 	{
 		$user_obj->fill_user_data($project_data['project_head']);
@@ -641,7 +641,7 @@ function fill_project_edit_form($project_id)
 	return fetch_tpl($PARS, $project_edit_form_tpl);
 }
 
-// Просмотр и редактирвоание проекта
+// РџСЂРѕСЃРјРѕС‚СЂ Рё СЂРµРґР°РєС‚РёСЂРІРѕР°РЅРёРµ РїСЂРѕРµРєС‚Р°
 function fill_show_project($project_id)
 {
 	global $site_db, $current_user_id, $user_obj;
@@ -651,13 +651,13 @@ function fill_show_project($project_id)
 	$project_edit_tools_tpl = file_get_contents($_SERVER['DOCUMENT_ROOT'].'/templates/projects/project_edit_tools.tpl');
 
 	
-	// Данные проекта
+	// Р”Р°РЅРЅС‹Рµ РїСЂРѕРµРєС‚Р°
 	$sql = "SELECT * FROM ".PROJECTS_TB." WHERE project_id='$project_id'";
 	
 	$project_data = $site_db->query_firstrow($sql);
 	
 	
-	// Если текущий пользователь является создателем проекта
+	// Р•СЃР»Рё С‚РµРєСѓС‰РёР№ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ СЏРІР»СЏРµС‚СЃСЏ СЃРѕР·РґР°С‚РµР»РµРј РїСЂРѕРµРєС‚Р°
 	if($project_data['user_id']==$current_user_id)
 	{
 		$project_task_item_tpl = file_get_contents('templates/projects/project_task_item.tpl');
@@ -675,37 +675,37 @@ function fill_show_project($project_id)
 	$show_project_tpl = file_get_contents('templates/projects/show_project.tpl');
 	
 		
-	// Проверка на доступность к проекту
+	// РџСЂРѕРІРµСЂРєР° РЅР° РґРѕСЃС‚СѓРїРЅРѕСЃС‚СЊ Рє РїСЂРѕРµРєС‚Сѓ
 	if(!check_project_access_for_user($current_user_id, $project_id) || $project_data['deleted'])
 	{
 		header('Location: /projects');
 		exit();
 	}
 	
-	// Если указано описание к проекту
+	// Р•СЃР»Рё СѓРєР°Р·Р°РЅРѕ РѕРїРёСЃР°РЅРёРµ Рє РїСЂРѕРµРєС‚Сѓ
 	if($project_data['project_desc'])
 	{
 		$PARS_2['{DESC}'] = $project_data['project_desc'];
 		$project_desc = fetch_tpl($PARS_2, $project_desc_tpl);
 	}
 	
-	// Задачи проекта
+	// Р—Р°РґР°С‡Рё РїСЂРѕРµРєС‚Р°
 	$project_tasks_list = fill_project_tasks_list($project_data); 
 
-	// Список отчетов
+	// РЎРїРёСЃРѕРє РѕС‚С‡РµС‚РѕРІ
 	$report_block = fill_project_report_block($project_data);
 	
 	if(check_project_access_for_user($current_user_id, $project_data['project_id'], 1))
 	{
-		// Кнопка закрытия проекта
+		// РљРЅРѕРїРєР° Р·Р°РєСЂС‹С‚РёСЏ РїСЂРѕРµРєС‚Р°
 		$project_close_btn_arr = get_project_close_btn($project_data);
 	}
  
-	// Список файлов для отчета
+	// РЎРїРёСЃРѕРє С„Р°Р№Р»РѕРІ РґР»СЏ РѕС‚С‡РµС‚Р°
 	$files_list = get_attached_files_to_content($project_data['project_id'], 8, 2);
 	
-	// ответственное лицо
-	// Заполянем объект подчиненного
+	// РѕС‚РІРµС‚СЃС‚РІРµРЅРЅРѕРµ Р»РёС†Рѕ
+	// Р—Р°РїРѕР»СЏРЅРµРј РѕР±СЉРµРєС‚ РїРѕРґС‡РёРЅРµРЅРЅРѕРіРѕ
 	if($project_data['project_head'])
 	{
 		$user_obj->fill_user_data($project_data['project_head']);
@@ -721,10 +721,10 @@ function fill_show_project($project_id)
 	}
 	else
 	{
-		$project_head = 'Нет';
+		$project_head = 'ГЌГҐГІ';
 	}
 	
-	// кнопка редактирования
+	// РєРЅРѕРїРєР° СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ
 	if($project_data['project_head']==$current_user_id || $project_data['user_id']==$current_user_id)
 	{
 		$project_edit_tools = fetch_tpl($PARS, $project_edit_tools_tpl);
@@ -754,7 +754,7 @@ function fill_show_project($project_id)
 	
 }
 
-// Возвращает кнопку закрытия проекта
+// Р’РѕР·РІСЂР°С‰Р°РµС‚ РєРЅРѕРїРєСѓ Р·Р°РєСЂС‹С‚РёСЏ РїСЂРѕРµРєС‚Р°
 function get_project_close_btn($project_data, $project_id)
 {
 	global $site_db;
@@ -765,7 +765,7 @@ function get_project_close_btn($project_data, $project_id)
 	
 	if(!$project_data && $project_id)
 	{
-		// Выбор пользователя, кто добавлял проект
+		// Р’С‹Р±РѕСЂ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ, РєС‚Рѕ РґРѕР±Р°РІР»СЏР» РїСЂРѕРµРєС‚
 		$sql = "SELECT * FROM ".PROJECTS_TB." WHERE project_id='$project_id'";
 	
 		$project_data = $site_db->query_firstrow($sql);
@@ -775,7 +775,7 @@ function get_project_close_btn($project_data, $project_id)
 	{
 		$btn_tpl = $project_open_btn_tpl;
 		
-		$str_status = 'Проект закрыт';
+		$str_status = 'РџСЂРѕРµРєС‚ Р·Р°РєСЂС‹С‚';
 	}
 	else
 	{
@@ -786,7 +786,7 @@ function get_project_close_btn($project_data, $project_id)
 	
 	return array('btn' => fetch_tpl($PARS, $btn_tpl), 'str_status' => $str_status);
 }
-// Задачи проекта
+// Р—Р°РґР°С‡Рё РїСЂРѕРµРєС‚Р°
 function fill_project_tasks_list($project_data)
 {
 	global $site_db, $current_user_id, $user_obj, $current_user_obj;
@@ -795,7 +795,7 @@ function fill_project_tasks_list($project_data)
 	
 	$project_task_desc_tpl = file_get_contents($_SERVER['DOCUMENT_ROOT'].'/templates/projects/project_task_desc.tpl');
 	
-	// Если текущий пользователь является создателем проекта
+	// Р•СЃР»Рё С‚РµРєСѓС‰РёР№ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ СЏРІР»СЏРµС‚СЃСЏ СЃРѕР·РґР°С‚РµР»РµРј РїСЂРѕРµРєС‚Р°
 	if($project_data['user_id']==$current_user_id)
 	{
 		$project_task_item_tpl = file_get_contents($_SERVER['DOCUMENT_ROOT'].'/templates/projects/project_task_item.tpl');
@@ -807,7 +807,7 @@ function fill_project_tasks_list($project_data)
 		$project_task_user_tpl = file_get_contents($_SERVER['DOCUMENT_ROOT'].'/templates/projects/project_task_user.tpl');
 	}
 	
-	// Выбор задач проекта
+	// Р’С‹Р±РѕСЂ Р·Р°РґР°С‡ РїСЂРѕРµРєС‚Р°
 	$sql = "SELECT * FROM ".PROJECT_TASKS_TB." WHERE project_id='$project_id' ORDER by task_id ASC";
 	
 	$res = $site_db->query($sql);
@@ -835,12 +835,12 @@ function fill_project_tasks_list($project_data)
 		
 		if($row['user_id'])
 		{
-			// Заполянем объект подчиненного
+			// Р—Р°РїРѕР»СЏРЅРµРј РѕР±СЉРµРєС‚ РїРѕРґС‡РёРЅРµРЅРЅРѕРіРѕ
 			$user_obj->fill_user_data($row['user_id']);
 
 			$user_id = $row['user_id'];
 			$PARS_3['{TASK_ID}'] = $row['task_id'];
-			// название клиента для поля фсбк
+			// РЅР°Р·РІР°РЅРёРµ РєР»РёРµРЅС‚Р° РґР»СЏ РїРѕР»СЏ С„СЃР±Рє
 			$PARS_3['{CLASS}'] = 'selected';
 			$PARS_3['{VALUE}'] = $row['user_id'];
 			
@@ -856,7 +856,7 @@ function fill_project_tasks_list($project_data)
 			$selected_user = fetch_tpl($PARS_3, $project_task_user_tpl);
 		}
 		
-		// Если задача должна выполниться после определенной задачи
+		// Р•СЃР»Рё Р·Р°РґР°С‡Р° РґРѕР»Р¶РЅР° РІС‹РїРѕР»РЅРёС‚СЊСЃСЏ РїРѕСЃР»Рµ РѕРїСЂРµРґРµР»РµРЅРЅРѕР№ Р·Р°РґР°С‡Рё
 		if($row['after_task_id1'])
 		{
 			$after_task_id = $row['after_task_id'];
@@ -872,15 +872,15 @@ function fill_project_tasks_list($project_data)
 		$task_desc = '';
 		if($row['task_desc']!='')
 		{
-			// Описание для текстареи
+			// РћРїРёСЃР°РЅРёРµ РґР»СЏ С‚РµРєСЃС‚Р°СЂРµРё
 			$PARS_1['{TASK_ID}'] = $row['task_id'];
 			$PARS_1['{TASK_DESC}'] = nl2br($row['task_desc']);
 			$task_desc = fetch_tpl($PARS_1, $project_task_desc_tpl);
 		}
-		// текстовое описание
+		// С‚РµРєСЃС‚РѕРІРѕРµ РѕРїРёСЃР°РЅРёРµ
 		$task_text_desc = $row['task_desc'];
 				
-		// Кнопка завершения задания 
+		// РљРЅРѕРїРєР° Р·Р°РІРµСЂС€РµРЅРёСЏ Р·Р°РґР°РЅРёСЏ
 		$complete_btn = get_project_task_complete_btn_tpl($row, $project_data);
 		 
 		$user_task  = '';
@@ -921,7 +921,7 @@ function fill_project_tasks_list($project_data)
 	
 	return $project_tasks_list;
 }
-// Возвращает шаблон кнопки выполнения задачи
+// Р’РѕР·РІСЂР°С‰Р°РµС‚ С€Р°Р±Р»РѕРЅ РєРЅРѕРїРєРё РІС‹РїРѕР»РЅРµРЅРёСЏ Р·Р°РґР°С‡Рё
 function get_project_task_complete_btn_tpl($task_data, $project_data)
 {
 	global $current_user_id;
@@ -943,7 +943,7 @@ function get_project_task_complete_btn_tpl($task_data, $project_data)
 	}
 	else if($task_data['user_id'] == $current_user_id)
 	{ 
-	 	// Задача выполнена
+	 	// Р—Р°РґР°С‡Р° РІС‹РїРѕР»РЅРµРЅР°
 		if($task_data['task_completed']==1)
 		{
 			$btn_tpl = $project_task_not_comlete_btn_tpl;
@@ -968,7 +968,7 @@ function fill_project_report_block($project_data)
 	
 	$project_more_btn_tpl = file_get_contents($_SERVER['DOCUMENT_ROOT'].'/templates/projects/project_more_btn.tpl');
 
-	// Если проект  закрыт
+	// Р•СЃР»Рё РїСЂРѕРµРєС‚ Р·Р°РєСЂС‹С‚
 	if($project_data['project_closed']==1)
 	{
 		$report_add_form_display = 'none';
@@ -978,25 +978,25 @@ function fill_project_report_block($project_data)
 		$report_add_form_display = 'block';
 	}
 	
-	// Очистка массива удаленных контактов
+	// РћС‡РёСЃС‚РєР° РјР°СЃСЃРёРІР° СѓРґР°Р»РµРЅРЅС‹С… РєРѕРЅС‚Р°РєС‚РѕРІ
 	if($_SESSION['project_report_delete'])
 	{
 		$_SESSION['project_report_delete'] = '';
 	}
 		
-	// Кол-во отчетов
+	// РљРѕР»-РІРѕ РѕС‚С‡РµС‚РѕРІ
 	$reports_count = get_project_reports_count($project_data['project_id']);
 	
-	// Кол-во страниц
+	// РљРѕР»-РІРѕ СЃС‚СЂР°РЅРёС†
 	$pages_count = ceil($reports_count/WORK_REPORTS_PER_PAGE);
 		
-	// Если страниц больше 1
+	// Р•СЃР»Рё СЃС‚СЂР°РЅРёС† Р±РѕР»СЊС€Рµ 1
 	if($pages_count > 1)
 	{
 		$more_btn = $project_more_btn_tpl;
 	}
 	
-	// Выбираем последний добавленный отчет
+	// Р’С‹Р±РёСЂР°РµРј РїРѕСЃР»РµРґРЅРёР№ РґРѕР±Р°РІР»РµРЅРЅС‹Р№ РѕС‚С‡РµС‚
 	$sql = "SELECT * FROM ".PROJECT_REPORTS_TB." WHERE project_id='$project_id' ORDER by report_id DESC LIMIT 1";
 		
 	$row = $site_db->query_firstrow($sql);
@@ -1006,9 +1006,9 @@ function fill_project_report_block($project_data)
 		$_SESSION['last_project_report_id'] = $row['report_id'];
 	}
 	
-	$add_report_btn_value = $project_data['user_id']==$current_user_id ? 'добавить комментарий' : 'добавить отчет';
+	$add_report_btn_value = $project_data['user_id']==$current_user_id ? 'Г¤Г®ГЎГ ГўГЁГІГј ГЄГ®Г¬Г¬ГҐГ­ГІГ Г°ГЁГ©' : 'Г¤Г®ГЎГ ГўГЁГІГј Г®ГІГ·ГҐГІ';
 	
-	// Список отчетов
+	// РЎРїРёСЃРѕРє РѕС‚С‡РµС‚РѕРІ
 	$report_list = fill_project_report_list($project_data);
 	
 	$PARS['{PROJECT_ID}'] = $project_id;
@@ -1032,19 +1032,19 @@ function fill_project_report_block($project_data)
 	return $report_block;
 }
 
-// Кол-во отчетов проекта
+// РљРѕР»-РІРѕ РѕС‚С‡РµС‚РѕРІ РїСЂРѕРµРєС‚Р°
 function get_project_reports_count($project_id)
 {
 	global $site_db;
 	
-	// Выбор отчетов для задания
+	// Р’С‹Р±РѕСЂ РѕС‚С‡РµС‚РѕРІ РґР»СЏ Р·Р°РґР°РЅРёСЏ
 	$sql = "SELECT COUNT(*) as count FROM ".PROJECT_REPORTS_TB." WHERE project_id='$project_id' AND deleted = 0";
 	
 	$row = $site_db->query_firstrow($sql);
 	
 	return $row['count'];
 }
-// Список отчетов
+// РЎРїРёСЃРѕРє РѕС‚С‡РµС‚РѕРІ
 function fill_project_report_list($project_data, $page = 1)
 {
 	global $site_db,  $user_obj, $current_user_id;
@@ -1053,13 +1053,13 @@ function fill_project_report_list($project_data, $page = 1)
 	
 	$page = $page ? $page : 1;
 	
-	// Последний добавленный пользователем контакт
+	// РџРѕСЃР»РµРґРЅРёР№ РґРѕР±Р°РІР»РµРЅРЅС‹Р№ РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј РєРѕРЅС‚Р°РєС‚
 	if($_SESSION['last_project_report_id'])
 	{
 		$and_report_id = " AND report_id <= '".$_SESSION['last_project_report_id']."' ";
 	}
 	
-	// Удаленные в этой сессии клиенты
+	// РЈРґР°Р»РµРЅРЅС‹Рµ РІ СЌС‚РѕР№ СЃРµСЃСЃРёРё РєР»РёРµРЅС‚С‹
 	$deleted_reports_ids = implode(', ', $_SESSION['project_report_delete']);
 	
 	if($deleted_reports_ids)
@@ -1067,12 +1067,12 @@ function fill_project_report_list($project_data, $page = 1)
 		$and_deleted_reports = " OR report_id IN($deleted_reports_ids) ";
 	}
 	
-	// Страничность
+	// РЎС‚СЂР°РЅРёС‡РЅРѕСЃС‚СЊ
 	$begin_pos = WORK_REPORTS_PER_PAGE * ($page-1);
 	
 	$limit = " LIMIT ".$begin_pos.",".WORK_REPORTS_PER_PAGE;
 	
-	// Выбор отчетов для задания
+	// Р’С‹Р±РѕСЂ РѕС‚С‡РµС‚РѕРІ РґР»СЏ Р·Р°РґР°РЅРёСЏ
 	$sql = "SELECT * FROM ".PROJECT_REPORTS_TB." WHERE (deleted = 0 $and_deleted_reports) AND project_id='".$project_data['project_id']."' $and_report_id ORDER by report_id DESC $limit";
 	 
 	$res = $site_db->query($sql);
@@ -1091,7 +1091,7 @@ function fill_project_report_list($project_data, $page = 1)
 	return $report_list;
 }
 
-// Заполнение элемента комментария
+// Р—Р°РїРѕР»РЅРµРЅРёРµ СЌР»РµРјРµРЅС‚Р° РєРѕРјРјРµРЅС‚Р°СЂРёСЏ
 function fill_project_reports_item($project_data, $report_data)
 {
 	global $user_obj, $current_user_id;
@@ -1106,7 +1106,7 @@ function fill_project_reports_item($project_data, $report_data)
 			
 	$confirm_btn = '';
 		 
-	// Отчет не подтвержден
+	// РћС‚С‡РµС‚ РЅРµ РїРѕРґС‚РІРµСЂР¶РґРµРЅ
 	if($project_data['user_id'] == $current_user_id && !$report_data['report_confirm'] && $report_data['user_id']!=$project_data['user_id'])
 	{
 		$report_not_confirm = 'not_confirm';
@@ -1129,7 +1129,7 @@ function fill_project_reports_item($project_data, $report_data)
 		
 	$user_obj->fill_user_data($report_data['user_id']);
 	
-	// Превью аватарки пользователя
+	// РџСЂРµРІСЊСЋ Р°РІР°С‚Р°СЂРєРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 	$user_avatar_src = get_user_preview_avatar_src($report_data['user_id'], $user_obj->get_user_image());
 
 	$PARS['{USER_ID}'] = $report_data['user_id'];
@@ -1144,7 +1144,7 @@ function fill_project_reports_item($project_data, $report_data)
 	
 	$PARS['{AVATAR_SRC}'] = $user_avatar_src;
 	
-	$PARS['{DATE}'] = datetime($report_data['report_date'], '%j %M в %H:%i');
+	$PARS['{DATE}'] = datetime($report_data['report_date'], '%j %M Гў %H:%i');
 	
 	$PARS['{TEXT}'] = htmlspecialchars_decode($report_data['report_text']);
 	
@@ -1162,7 +1162,7 @@ function fill_project_reports_item($project_data, $report_data)
 	
 	return 	$report_item;
 }
-// Форма добавления выговора
+// Р¤РѕСЂРјР° РґРѕР±Р°РІР»РµРЅРёСЏ РІС‹РіРѕРІРѕСЂР°
 function fill_projects_add_form()
 {
 	global $site_db, $current_user_id, $user_obj;
@@ -1225,7 +1225,7 @@ function check_project_tasks($project_tasks_arr)
 	}
 	
 	$num = 1;	
-	//Обработка ошибок задач
+	// РћР±СЂР°Р±РѕС‚РєР° РѕС€РёР±РѕРє Р·Р°РґР°С‡
 	foreach($project_tasks_arr as $num => $data)
 	{
 		$data = (array)$data;
@@ -1249,12 +1249,12 @@ function check_project_tasks($project_tasks_arr)
  
 	return $error;
 }
-// Проверка, есть ли доступ к проекту для пользователя
+// РџСЂРѕРІРµСЂРєР°, РµСЃС‚СЊ Р»Рё РґРѕСЃС‚СѓРї Рє РїСЂРѕРµРєС‚Сѓ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 function check_project_access_for_user($user_id, $project_id, $check_for_admin)
 {
 	global $site_db, $current_user_id, $user_obj, $current_user_obj;
 	
-	// Выбор пользователя, кто добавлял проект
+	// Р’С‹Р±РѕСЂ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ, РєС‚Рѕ РґРѕР±Р°РІР»СЏР» РїСЂРѕРµРєС‚
 	$sql = "SELECT * FROM ".PROJECTS_TB." WHERE project_id='$project_id'";
 	
 	$row = $site_db->query_firstrow($sql);
@@ -1276,7 +1276,7 @@ function check_project_access_for_user($user_id, $project_id, $check_for_admin)
 		return false;
 	}
 	
-	// Проверка, участвует ли пользователь в проекте
+	// РџСЂРѕРІРµСЂРєР°, СѓС‡Р°СЃС‚РІСѓРµС‚ Р»Рё РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ РІ РїСЂРѕРµРєС‚Рµ
 	$sql = "SELECT task_id, user_id FROM ".PROJECT_TASKS_TB."
 			WHERE user_id='$user_id' AND project_id='$project_id' LIMIT 1";
 	 
@@ -1289,20 +1289,20 @@ function check_project_access_for_user($user_id, $project_id, $check_for_admin)
 	else return false;
 }
 
-// Кол-во новых отчетов ко всем проектам, которые создавал пользователь
+// РљРѕР»-РІРѕ РЅРѕРІС‹С… РѕС‚С‡РµС‚РѕРІ РєРѕ РІСЃРµРј РїСЂРѕРµРєС‚Р°Рј, РєРѕС‚РѕСЂС‹Рµ СЃРѕР·РґР°РІР°Р» РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ
 function get_new_projects_reports_counts($user_id, $project_id)
 {
 	global $site_db;
 	
 	if($project_id)
 	{
-		 // Выбор проектов
+		 // Р’С‹Р±РѕСЂ РїСЂРѕРµРєС‚РѕРІ
 		$sql = "SELECT COUNT(*) as count FROM ".PROJECT_REPORTS_TB."
 				WHERE user_id!='$user_id' AND project_id='$project_id' AND deleted<>1 AND report_confirm=0";
 	}
 	else
 	{
-		// Выбор проектов
+		// Р’С‹Р±РѕСЂ РїСЂРѕРµРєС‚РѕРІ
 		$sql = "SELECT COUNT(*) as count FROM ".PROJECT_REPORTS_TB." i
 				LEFT JOIN ".PROJECTS_TB." j ON i.project_id=j.project_id
 				WHERE i.user_id!='$user_id' AND i.deleted<>1  AND j.deleted=0 AND j.user_id='$user_id' AND i.report_confirm=0";
@@ -1313,7 +1313,7 @@ function get_new_projects_reports_counts($user_id, $project_id)
 	return $row['count'];
 }
 
-// Кол-во новых отчетов ко всем проектам, которые создавал пользователь
+// РљРѕР»-РІРѕ РЅРѕРІС‹С… РѕС‚С‡РµС‚РѕРІ РєРѕ РІСЃРµРј РїСЂРѕРµРєС‚Р°Рј, РєРѕС‚РѕСЂС‹Рµ СЃРѕР·РґР°РІР°Р» РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ
 function get_new_task_completed_counts($user_id, $project_id, $what)
 {
 	global $site_db, $current_user_id;
@@ -1333,12 +1333,12 @@ function get_new_task_completed_counts($user_id, $project_id, $what)
 	}
 	else
 	{
-		// Для списка проектов, в которых пользователь участвует
+		// Р”Р»СЏ СЃРїРёСЃРєР° РїСЂРѕРµРєС‚РѕРІ, РІ РєРѕС‚РѕСЂС‹С… РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ СѓС‡Р°СЃС‚РІСѓРµС‚
 		if($what=='user_part_projects')
 		{
 			$and_project = " AND i.user_id!='$user_id'";
 		}
-		// Для списка проектов пользователя
+		// Р”Р»СЏ СЃРїРёСЃРєР° РїСЂРѕРµРєС‚РѕРІ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 		else if($what=='user_projects')
 		{
 			$and_project = " AND i.user_id='$user_id'";
@@ -1354,12 +1354,12 @@ function get_new_task_completed_counts($user_id, $project_id, $what)
 	return $row['count'];
 }
 
-// КОл-во новых непринятых проэктов пользователя
+// РљРћР»-РІРѕ РЅРѕРІС‹С… РЅРµРїСЂРёРЅСЏС‚С‹С… РїСЂРѕСЌРєС‚РѕРІ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 function get_new_projects_count($user_id)
 {
 	global $site_db;
 	
-	// Выбор проектов
+	// Р’С‹Р±РѕСЂ РїСЂРѕРµРєС‚РѕРІ
 	$sql = "SELECT COUNT(DISTINCT(i.project_id)) as count FROM ".PROJECTS_TB." i
 			LEFT JOIN ".PROJECT_TASKS_TB." j ON i.project_id=j.project_id
 			WHERE ((j.user_id='$user_id' AND j.task_confirm=0) OR (i.project_head='$user_id' AND i.project_head_confirmed=0)) AND i.deleted<>1 AND i.user_id!='$user_id' AND i.project_closed=0";
@@ -1368,12 +1368,12 @@ function get_new_projects_count($user_id)
 	
 	return $row['count'];
 }
-// Данные проекта
+// Р”Р°РЅРЅС‹Рµ РїСЂРѕРµРєС‚Р°
 function get_project_data($project_id)
 {
 	global $site_db;
 	
-	// Выбор проектов
+	// Р’С‹Р±РѕСЂ РїСЂРѕРµРєС‚РѕРІ
 	$sql = "SELECT * FROM ".PROJECTS_TB." WHERE project_id='$project_id'";
 	
 	$project_data = $site_db->query_firstrow($sql);
@@ -1387,12 +1387,12 @@ function get_project_task_comments_block($task_id)
 	
 	$comms_tpl = file_get_contents($_SERVER['DOCUMENT_ROOT'].'/templates/projects/project_task_comments.tpl');
 	
-	// Выбираем задачу
+	// Р’С‹Р±РёСЂР°РµРј Р·Р°РґР°С‡Сѓ
 	$sql = "SELECT * FROM ".PROJECT_TASKS_TB." WHERE task_id='$task_id'";
 					
 	$task_data = $site_db->query_firstrow($sql);
 	 
-	// список отчетов
+	// СЃРїРёСЃРѕРє РѕС‚С‡РµС‚РѕРІ
 	$reports_list = fill_project_task_reports_list($task_data);
 	
 	$PARS['{TASK_ID}'] = $task_id;
@@ -1402,7 +1402,7 @@ function get_project_task_comments_block($task_id)
 	return fetch_tpl($PARS, $comms_tpl);
 }
 
-// Список отчетов
+// РЎРїРёСЃРѕРє РѕС‚С‡РµС‚РѕРІ
 function fill_project_task_reports_list($task_data, $page = 1)
 {
 	global $site_db,  $user_obj, $current_user_id;
@@ -1411,7 +1411,7 @@ function fill_project_task_reports_list($task_data, $page = 1)
 	
 	$page = $page ? $page : 1;
 	
-	// Выбор отчетов для задания
+	// Р’С‹Р±РѕСЂ РѕС‚С‡РµС‚РѕРІ РґР»СЏ Р·Р°РґР°РЅРёСЏ
 	$sql = "SELECT * FROM ".PROJECTS_TASKS_REPORTS_TB." WHERE deleted = 0 AND task_id='".$task_data['task_id']."' ORDER by report_id DESC";
 	 
 	$res = $site_db->query($sql);
@@ -1429,7 +1429,7 @@ function fill_project_task_reports_list($task_data, $page = 1)
 	return $report_list;
 }
 
-// Заполнение элемента комментария
+// Р—Р°РїРѕР»РЅРµРЅРёРµ СЌР»РµРјРµРЅС‚Р° РєРѕРјРјРµРЅС‚Р°СЂРёСЏ
 function fill_project_task_reports_item($task_data, $report_data)
 {
 	global $user_obj, $current_user_id;
@@ -1449,7 +1449,7 @@ function fill_project_task_reports_item($task_data, $report_data)
 	
 	if(!$report_data['report_confirm'])
 	{
-		// Отчет не подтвержден
+		// РћС‚С‡РµС‚ РЅРµ РїРѕРґС‚РІРµСЂР¶РґРµРЅ
 		if($task_data['added_by_user_id'] == $current_user_id && $report_data['user_id']!=$current_user_id)
 		{
 			$report_not_confirm = 'not_confirm';
@@ -1461,7 +1461,7 @@ function fill_project_task_reports_item($task_data, $report_data)
 			$confirm_btn = fetch_tpl($PARS_1, $report_confirm_btn_tpl);
 		}
 		
-		// Отчет не подтвержден
+		// РћС‚С‡РµС‚ РЅРµ РїРѕРґС‚РІРµСЂР¶РґРµРЅ
 		if($task_data['user_id'] == $current_user_id && $report_data['user_id']!=$current_user_id)
 		{
 			$report_not_confirm = 'not_confirm';
@@ -1486,7 +1486,7 @@ function fill_project_task_reports_item($task_data, $report_data)
 		
 	$user_obj->fill_user_data($report_data['user_id']);
 	
-	// Превью аватарки пользователя
+	// РџСЂРµРІСЊСЋ Р°РІР°С‚Р°СЂРєРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 	$user_avatar_src = get_user_preview_avatar_src($report_data['user_id'], $user_obj->get_user_image());
 	
 	$PARS['{TASK_ID}'] = $task_data['task_id'];
@@ -1503,7 +1503,7 @@ function fill_project_task_reports_item($task_data, $report_data)
 	
 	$PARS['{AVATAR_SRC}'] = $user_avatar_src;
 	
-	$PARS['{DATE}'] = datetime($report_data['report_date'], '%j %M в %H:%i');
+	$PARS['{DATE}'] = datetime($report_data['report_date'], '%j %M Гў %H:%i');
 	
 	$PARS['{TEXT}'] = htmlspecialchars_decode($report_data['report_text']);
 	
@@ -1521,26 +1521,26 @@ function fill_project_task_reports_item($task_data, $report_data)
 	
 	return 	$report_item;
 }
-// Кол-во новых отчетов для задач
+// РљРѕР»-РІРѕ РЅРѕРІС‹С… РѕС‚С‡РµС‚РѕРІ РґР»СЏ Р·Р°РґР°С‡
 function get_project_task_new_reports_count($project_data, $what)
 {
 	global $site_db, $current_user_id;
 	
-	### Выбираем задачи проекта
+	### Р’С‹Р±РёСЂР°РµРј Р·Р°РґР°С‡Рё РїСЂРѕРµРєС‚Р°
 	if($project_data)
 	{
 		$sql = "SELECT i.* FROM ".PROJECT_TASKS_TB." i
 				LEFT JOIN ".PROJECTS_TB." j ON i.project_id=j.project_id 
 				WHERE j.deleted=0 AND i.project_id='".$project_data['project_id']."' AND j.project_closed='0'"; 
 	}
-	// Выбор проектов, которые создавал пользователь
+	// Р’С‹Р±РѕСЂ РїСЂРѕРµРєС‚РѕРІ, РєРѕС‚РѕСЂС‹Рµ СЃРѕР·РґР°РІР°Р» РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ
 	else if(!$project_data && $what=='user_projects')
 	{ 
 		$sql = "SELECT i.* FROM ".PROJECT_TASKS_TB." i
 				LEFT JOIN ".PROJECTS_TB." j ON i.project_id=j.project_id 
 				WHERE j.user_id='$current_user_id' AND (i.user_id='$current_user_id' || i.added_by_user_id='$current_user_id') AND j.deleted=0 AND j.project_closed='0'"; 
 	}
-	// Выбор проектов, в которых пользователь участвует
+	// Р’С‹Р±РѕСЂ РїСЂРѕРµРєС‚РѕРІ, РІ РєРѕС‚РѕСЂС‹С… РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ СѓС‡Р°СЃС‚РІСѓРµС‚
 	else if(!$project_data && $what=='user_part_projects')
 	{ 
 		$sql = "SELECT i.* FROM ".PROJECT_TASKS_TB." i
@@ -1555,7 +1555,7 @@ function get_project_task_new_reports_count($project_data, $what)
 		  
 	while($row=$site_db->fetch_array($res))
 	{
-		// Формируем массив задач, которые имеют отношение к пользователю текущему
+		// Р¤РѕСЂРјРёСЂСѓРµРј РјР°СЃСЃРёРІ Р·Р°РґР°С‡, РєРѕС‚РѕСЂС‹Рµ РёРјРµСЋС‚ РѕС‚РЅРѕС€РµРЅРёРµ Рє РїРѕР»СЊР·РѕРІР°С‚РµР»СЋ С‚РµРєСѓС‰РµРјСѓ
 		if($row['user_id']==$current_user_id || $row['added_by_user_id']==$current_user_id)
 		{
 			$to_user_tasks[] = $row['task_id'];
@@ -1568,7 +1568,7 @@ function get_project_task_new_reports_count($project_data, $what)
 	{
 		$to_user_tasks_ids = implode(', ', $to_user_tasks);
 		
-		// Выбираем кол-во новых отчетов
+		// Р’С‹Р±РёСЂР°РµРј РєРѕР»-РІРѕ РЅРѕРІС‹С… РѕС‚С‡РµС‚РѕРІ
 		$sql = "SELECT COUNT(*) as count FROM ".PROJECTS_TASKS_REPORTS_TB." WHERE task_id IN($to_user_tasks_ids) AND user_id!='$current_user_id' AND report_confirm=0 AND deleted=0";
 		 
 		$row = $site_db->query_firstrow($sql);
@@ -1594,33 +1594,33 @@ function project_send_notice_by_email($project_id, $notice_type, $parameters)
 	global $site_db, $current_user_id, $user_obj;
 
 	 
-	// новый проект
+	// РЅРѕРІС‹Р№ РїСЂРѕРµРєС‚
 	if($notice_type==1)
 	{
 		$email_tpl = file_get_contents($_SERVER['DOCUMENT_ROOT'].'/templates/email/new_project.tpl');
-		$subject = 'Новый проект';
+		$subject = 'РќРѕРІС‹Р№ РїСЂРѕРµРєС‚';
 	}
-	// проект отредактирован
+	// РїСЂРѕРµРєС‚ РѕС‚СЂРµРґР°РєС‚РёСЂРѕРІР°РЅ
 	else if($notice_type==2)
 	{
 		$email_tpl = file_get_contents($_SERVER['DOCUMENT_ROOT'].'/templates/email/edit_project.tpl');
-		$subject = 'Проект отредактирован';
+		$subject = 'РџСЂРѕРµРєС‚ РѕС‚СЂРµРґР°РєС‚РёСЂРѕРІР°РЅ';
 	}
-	// К проекту добавлен комментарий
+	// Рљ РїСЂРѕРµРєС‚Сѓ РґРѕР±Р°РІР»РµРЅ РєРѕРјРјРµРЅС‚Р°СЂРёР№
 	else if($notice_type==3)
 	{
 		$email_tpl = file_get_contents($_SERVER['DOCUMENT_ROOT'].'/templates/email/new_report_project.tpl');
-		$subject = 'Комментарий к проекту';
+		$subject = 'РљРѕРјРјРµРЅС‚Р°СЂРёР№ Рє РїСЂРѕРµРєС‚Сѓ';
 	}
-	// К задаче проекта добавлен комментарий
+	// Рљ Р·Р°РґР°С‡Рµ РїСЂРѕРµРєС‚Р° РґРѕР±Р°РІР»РµРЅ РєРѕРјРјРµРЅС‚Р°СЂРёР№
 	else if($notice_type==4)
 	{
 		$email_tpl = file_get_contents($_SERVER['DOCUMENT_ROOT'].'/templates/email/new_report_task_project.tpl');
-		$subject = 'Комментарий к задаче проекта';
+		$subject = 'РљРѕРјРјРµРЅС‚Р°СЂРёР№ Рє Р·Р°РґР°С‡Рµ РїСЂРѕРµРєС‚Г ';
 	}
 	
 	
-	// данные проекта
+	// РґР°РЅРЅС‹Рµ РїСЂРѕРµРєС‚Р°
 	$project_data = get_project_data($project_id);
 	
 	$PARS['{PROJECT_ID}'] = $project_id;
@@ -1631,7 +1631,7 @@ function project_send_notice_by_email($project_id, $notice_type, $parameters)
 		
 	$email_text = fetch_tpl($PARS, $email_tpl);
 	
-	// пользователи для уведомления
+	// РїРѕР»СЊР·РѕРІР°С‚РµР»Рё РґР»СЏ СѓРІРµРґРѕРјР»РµРЅРёСЏ
 	$users_arr = get_project_users_for_notice($project_id, $current_user_id);
 	//print_r($users_arr);
 	foreach($users_arr as $user_id)
@@ -1645,12 +1645,12 @@ function project_send_notice_by_email($project_id, $notice_type, $parameters)
 				
 		$user_data = $user_obj->get_user_data();
 		 
-		// Отправка email
+		// РћС‚РїСЂР°РІРєР° email
 		send_email_msg($user_data['user_email'], $subject, $email_text);
 	}
 }
 
-// Полученеи списка пользователей для уведомления
+// РџРѕР»СѓС‡РµРЅРµРё СЃРїРёСЃРєР° РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№ РґР»СЏ СѓРІРµРґРѕРјР»РµРЅРёСЏ
 function get_project_users_for_notice($project_id, $not_user_id)
 {
 	global $site_db, $current_user_id, $user_obj;
@@ -1669,7 +1669,7 @@ function get_project_users_for_notice($project_id, $not_user_id)
 		$users_arr[$project_data['project_head']] = $project_data['project_head'];
 	}
 	
-	// выбор ролей задачи
+	// РІС‹Р±РѕСЂ СЂРѕР»РµР№ Р·Р°РґР°С‡Рё
 	$sql = "SELECT * FROM tasks_projects_tasks WHERE project_id='$project_id' AND user_id<>'$not_user_id'";
 	
 	$res = $site_db->query($sql);

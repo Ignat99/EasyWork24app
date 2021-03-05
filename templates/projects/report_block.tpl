@@ -1,4 +1,4 @@
-<div class="cat_block" style="margin-top:35px">Комментарии:</div>
+<div class="cat_block" style="margin-top:35px">Comentarios:</div>
 <div id="report_add_form " style="display:{REPORT_ADD_FORM_DISPLAY}">
 <div class="add_form  add_form_ntrb" id="add_report_form">
 <textarea id="report_text" class="input_text" style="width:700px"></textarea>

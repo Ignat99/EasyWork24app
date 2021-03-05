@@ -9,7 +9,7 @@
 
 <table cellpadding="0" cellspacing="0">
 <tr>
-<td>Ответственное лицо:</td><td style="padding-left:10px">{PROJECT_HEAD} </td>
+<td>Persona responsable:</td><td style="padding-left:10px">{PROJECT_HEAD} </td>
 </tr>
 </table>
 <br>
@@ -21,10 +21,10 @@
 <td style="vertical-align:top; min-width:300px">
     <table class="project_tasks_tb"  cellpadding="0" cellspacing="0" id="project_tasks_tb">
     <tr>
-    <th class="nopdl">№</th>
-    <th class="">Сотрудник</th>
-    <th title="Предшествующая задача">Связь</th>
-    <th class="">Дата старта &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Дата завершения</th>
+    <th class="nopdl">В№</th>
+    <th class="">Empleado</th>
+    <th title="Tarea previa">ComunicaciГіn</th>
+    <th class="">Fecha de inicio &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fecha de realizaciГіn</th>
      
     <th></th>
     </tr>
@@ -32,7 +32,7 @@
    {PROJECT_TASKS_LIST}
    </tbody>
    </table>
-   <a href="javascript:;" onclick="add_project_task()" class="link" id="add_more_project_task_btn">[+] добавить еще задачу</a> 
+   <a href="javascript:;" onclick="add_project_task()" class="link" id="add_more_project_task_btn">[+] agregar otra tarea</a> 
 </td>
 <td style="vertical-align:top"></td>
 </tr>
@@ -44,13 +44,13 @@
 </div>
 
 <div style="margin-bottom:10px" id="add_project_task_btn">
-<a href="javascript:;" onclick="add_project_task()" class="link">[+] добавить задачу</a>
+<a href="javascript:;" onclick="add_project_task()" class="link">[+] agregar tarea</a>
 </div>
 <div class="d_none project_period_date" id="project_period_date">
 
-<div><span class="prt_dates_rs">По плану</span> Дата старта: <span id="project_date_start_plan"></span> Дата завершения: <span id="project_date_finish_plan"></span></div>
-<div style="margin:4px 0px 4px 0px"><span class="prt_dates_rs">По факту</span> Дата старта: <span id="project_date_start"></span> Дата завершения: <span id="project_date_finish"></span></div>
-<div style="margin:4px 0px 4px 0px"><span class="prt_dates_rs">Отставание от графика</span> <span id="behind_schedule"></span></div>
+<div><span class="prt_dates_rs">De acuerdo al plan</span> Fecha de inicio: <span id="project_date_start_plan"></span> Fecha de realizaciГіn: <span id="project_date_finish_plan"></span></div>
+<div style="margin:4px 0px 4px 0px"><span class="prt_dates_rs">De hecho</span> Fecha de inicio: <span id="project_date_start"></span> Fecha de realizaciГіn: <span id="project_date_finish"></span></div>
+<div style="margin:4px 0px 4px 0px"><span class="prt_dates_rs">retrasado el horario</span> <span id="behind_schedule"></span></div>
  
 
 </div>     
@@ -65,7 +65,7 @@
 <tbody class="project_scheme_days_rows" id="project_scheme_days_rows"></tbody>
 </table>
 </div>
-<div class="sub_project_scheme" id="gr_edited_notice">Изменения на графике отобразятся после нажатия на кнопку "Сохранить изменения".</div>
+<div class="sub_project_scheme" id="gr_edited_notice">Los cambios en el grГЎfico se mostrarГЎn despuГ©s de hacer clic en "Guardar cambios".</div>
 <div class="clear"></div>
 <div>
 <div style="margin-top:15px"></div>
@@ -73,7 +73,7 @@
 
 
 <a class="button" onclick="save_project()" href="javascript:;" id="add_project_btn">
-<div class="right"></div><div class="left"></div><div class="btn_cont">сохранить изменения</div></a>
+<div class="right"></div><div class="left"></div><div class="btn_cont">Guardar cambios</div></a>
 
 <div class="clear"></div>
 </div>
